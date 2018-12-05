@@ -51,7 +51,7 @@ def input_name(day):
     return f'inputs/day{day:02d}.txt'
 
 
-def download_input(day, year=2018):
+def download_input(day, year=2017):
     cookies = json.load(open('cookie.json'))
     r = requests.get(f'http://adventofcode.com/{year}/day/{day}/input', cookies=cookies)
     r.raise_for_status()
