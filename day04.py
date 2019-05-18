@@ -2,9 +2,11 @@ import aoc
 
 
 @aoc.test({
-'''aa bb cc dd ee
-aa bb cc dd aa
-aa bb cc dd aaa''': 2
+    '''
+    aa bb cc dd ee
+    aa bb cc dd aa
+    aa bb cc dd aaa
+    ''': 2
 })
 def part_1(data: aoc.Data):
     return len([
@@ -14,11 +16,13 @@ def part_1(data: aoc.Data):
 
 
 @aoc.test({
-'''abcde fghij
-abcde xyz ecdab
-a ab abc abd abf abj
-iiii oiii ooii oooi oooo
-oiii ioii iioi iiio''': 3
+    '''
+    abcde fghij
+    abcde xyz ecdab
+    a ab abc abd abf abj
+    iiii oiii ooii oooi oooo
+    oiii ioii iioi iiio
+    ''': 3
 })
 def part_2(data: aoc.Data):
     return len([
