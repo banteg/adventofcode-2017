@@ -16,24 +16,19 @@ class Cube:
 
 
 directions = {
-    'n':  Cube(0, 1, -1),
+    'n': Cube(0, 1, -1),
     'ne': Cube(1, 0, -1),
     'se': Cube(1, -1, 0),
-    's':  Cube(0, -1, 1),
+    's': Cube(0, -1, 1),
     'sw': Cube(-1, 0, 1),
     'nw': Cube(-1, 1, 0),
 }
 
 
-@aoc.test({
-    'ne,ne,ne': 3,
-    'ne,ne,sw,sw': 0,
-    'ne,ne,s,s': 2,
-    'se,sw,se,sw,sw': 3,
-})
+@aoc.test({'ne,ne,ne': 3, 'ne,ne,sw,sw': 0, 'ne,ne,s,s': 2, 'se,sw,se,sw,sw': 3})
 def part_1(data: aoc.Data):
-    steps = data.split(',')
-    pos = Coord(0, 0, 0)
+    steps = data.rstrip().split(',')
+    pos = Cube(0, 0, 0)
     for step in steps:
         pos += directions[step]
     return pos.distance()
@@ -41,8 +36,8 @@ def part_1(data: aoc.Data):
 
 @aoc.test({})
 def part_2(data: aoc.Data):
-    steps = data.split(',')
-    pos = Coord(0, 0, 0)
+    steps = data.rstrip().split(',')
+    pos = Cube(0, 0, 0)
     furthest = 0
     for step in steps:
         pos += directions[step]
