@@ -46,9 +46,9 @@ def test(cases):
             data = Data(case)
             result = f(data)
             if result == expected:
-                click.secho(f'{ok} {case_pretty} == {result}')
+                click.secho(f'{ok} {case_pretty} = {result}')
             else:
-                print(f'{fail} {case_pretty} == {result}, expected {expected}')
+                print(f'{fail} {case_pretty} ≠ {result}, expected {expected}')
                 tests_ok = False
         if tests_ok:
             data = load_input(day)
