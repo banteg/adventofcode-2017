@@ -16,22 +16,16 @@ def unwind(n):
             return x, y
 
 
-
 def neigbours(x, y, coords):
     return sum(
-        coords.get((x + dx, y + dy), 0) for dx, dy in
-        [(-1, -1), (0, -1), (1, -1),
-         (-1, 0), (1, 0),
-         (-1, 1), (0, 1), (1, 1)]
+        coords.get((x + dx, y + dy), 0)
+        for dx in [-1, 0, 1]
+        for dy in [-1, 0, 1]
+        if (dx, dy) != (0, 0)
     )
 
 
-@aoc.test({
-    '1': 0,
-    '12': 3,
-    '23': 2,
-    '1024': 31,
-})
+@aoc.test({'1': 0, '12': 3, '23': 2, '1024': 31})
 def part_1(data: aoc.Data):
     x, y = unwind(data)
     return abs(x) + abs(y)
@@ -48,4 +42,3 @@ def part_2(data: aoc.Data):
         coords[(x, y)] = num
         if num > int(data):
             return num
-            break
