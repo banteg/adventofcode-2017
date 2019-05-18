@@ -1,5 +1,6 @@
-inputs
 __pycache__
-cookie.json
 .idea
+.vscode
+config.py
+inputs
 polyglot
