@@ -1,7 +1,6 @@
 __pycache__
 .idea
 .mypy_cache
-.vscode
 config.py
 inputs
 polyglot
