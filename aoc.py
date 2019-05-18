@@ -14,6 +14,12 @@ fail = click.style('✘', fg='red')
 
 class Data(str):
 
+    @classmethod
+    def from_example(cls, data):
+        self = cls(data)
+        self.is_example = True
+        return self
+
     @property
     def int_lines(self):
         return [int(x) for x in self.splitlines()]
@@ -24,10 +30,6 @@ class Data(str):
             [int(x) for x in re.findall(r'-?\d+', line)]
             for line in self.splitlines()
         ]
-
-
-def is_example(data, examples):
-    return any(cleandoc(example) == data for example in examples)
 
 
 def test(cases):
@@ -43,12 +45,12 @@ def test(cases):
         for case, expected in cases.items():
             case = cleandoc(case)
             case_pretty = case.replace('\n', ', ')
-            data = Data(case)
+            data = Data.from_example(case)
             result = f(data)
             if result == expected:
-                click.secho(f'{ok} {case_pretty} = {result}')
+                click.secho(f'{ok} {case_pretty}: {result}')
             else:
-                print(f'{fail} {case_pretty} ≠ {result}, expected {expected}')
+                print(f'{fail} {case_pretty}: {result} ≠ {expected}')
                 tests_ok = False
         if tests_ok:
             data = load_input(day)
