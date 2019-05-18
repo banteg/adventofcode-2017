@@ -1,20 +1,15 @@
 import re
-import click
-import requests
-from pathlib import Path
-from inspect import cleandoc
-from lxml import html
 from functools import wraps
+from inspect import cleandoc
+from pathlib import Path
 
 import click
-import pickledb
+import requests
 
 from config import cookies
 
-
 ok = click.style('✔︎', fg='green')
 fail = click.style('✘', fg='red')
-db = pickledb.load('answers.db', True)
 
 
 class Data(str):
