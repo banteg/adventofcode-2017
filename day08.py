@@ -3,11 +3,12 @@ from collections import defaultdict, namedtuple
 from operator import gt, ge, lt, le, eq, ne, add, sub
 
 
-example = '''b inc 5 if a > 1
-a inc 1 if b < 5
-c dec -10 if a >= 1
-c inc -20 if c == 10
-'''
+example = '''
+    b inc 5 if a > 1
+    a inc 1 if b < 5
+    c dec -10 if a >= 1
+    c inc -20 if c == 10
+    '''
 
 
 def maybe_int(s):
@@ -18,8 +19,7 @@ def maybe_int(s):
 
 
 def load_instructions(data):
-    Instruction = namedtuple(
-        'Instruction', ['reg', 'op', 'v', 'x', 'a', 'cond', 'b'])
+    Instruction = namedtuple('Instruction', ['reg', 'op', 'v', 'x', 'a', 'cond', 'b'])
     return [Instruction(*[maybe_int(x) for x in row.split()]) for row in data.splitlines()]
 
 
@@ -28,7 +28,9 @@ def run_program(instructions):
     ops = {'inc': add, 'dec': sub}
     registers = defaultdict(int)
 
-    def pointer(x): return x if isinstance(x, int) else registers[x]
+    def pointer(x):
+        return x if isinstance(x, int) else registers[x]
+
     high = 0
     for i in instructions:
         a, b, v = pointer(i.a), pointer(i.b), pointer(i.v)
