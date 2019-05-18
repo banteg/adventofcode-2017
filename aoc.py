@@ -17,8 +17,12 @@ class Data(str):
     @classmethod
     def from_example(cls, data):
         self = cls(data)
-        self.is_example = True
+        self._is_example = True
         return self
+
+    @property
+    def is_example(self):
+        return getattr(self, '_is_example', False)
 
     @property
     def int_lines(self):
@@ -41,6 +45,7 @@ def test(cases):
         day = int(re.search(r'\d+', path.name).group(0))
         part = f.__name__.replace('_', ' ')
         click.secho(f'day {day}, {part}')
+        load_input(day)
         tests_ok = True
         for case, expected in cases.items():
             case = cleandoc(case)
