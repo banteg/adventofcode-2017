@@ -3,7 +3,7 @@ from functools import reduce
 from operator import xor
 
 
-def round(lengths, rope_size=256, skip=0, pos=0, rope=None):
+def knot_round(lengths, rope=None, skip=0, pos=0, rope_size=256):
     if rope is None:
         rope = list(range(rope_size))
     for length in lengths:
@@ -17,10 +17,18 @@ def round(lengths, rope_size=256, skip=0, pos=0, rope=None):
     return rope, skip, pos
 
 
+def knot_hash(lengths):
+    rope, skip, pos = None, 0, 0
+    for _ in range(64):
+        rope, skip, pos = knot_round(lengths, rope, skip, pos)
+    dense_hash = [reduce(xor, rope[i:i+16]) for i in range(0, 256, 16)]
+    return bytes(dense_hash).hex()
+
+
 @aoc.test({'3, 4, 1, 5': 12})
 def part_1(data: aoc.Data):
     rope_size = 5 if data.is_example else 256
-    rope, *_ = round(data.ints_lines[0], rope_size)
+    rope, *_ = knot_round(data.ints_lines[0], rope_size=rope_size)
     return rope[0] * rope[1]
 
 
@@ -33,9 +41,4 @@ def part_1(data: aoc.Data):
 def part_2(data: aoc.Data):
     data = [int(x) for x in data.rstrip().encode('ascii')]
     iv = [17, 31, 73, 47, 23]
-    lengths = data + iv
-    rope, skip, pos = None, 0, 0
-    for _ in range(64):
-        rope, skip, pos = round(lengths, 256, skip, pos, rope)
-    dense_hash = [reduce(xor, rope[i:i+16]) for i in range(0, 256, 16)]
-    return bytes(dense_hash).hex()
+    return knot_hash(data + iv)
