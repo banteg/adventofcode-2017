@@ -17,7 +17,10 @@ def knot_round(lengths, rope=None, skip=0, pos=0, rope_size=256):
     return rope, skip, pos
 
 
-def knot_hash(lengths):
+def knot_hash(text):
+    data = [int(x) for x in text.encode('ascii')]
+    iv = [17, 31, 73, 47, 23]
+    lengths = data + iv
     rope, skip, pos = None, 0, 0
     for _ in range(64):
         rope, skip, pos = knot_round(lengths, rope, skip, pos)
@@ -39,6 +42,4 @@ def part_1(data: aoc.Data):
     '1,2,4': '63960835bcdc130f0b66d7ff4f6a5a8e',
 })
 def part_2(data: aoc.Data):
-    data = [int(x) for x in data.rstrip().encode('ascii')]
-    iv = [17, 31, 73, 47, 23]
-    return knot_hash(data + iv)
+    return knot_hash(data)
