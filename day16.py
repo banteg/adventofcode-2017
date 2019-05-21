@@ -33,11 +33,11 @@ def part_1(data: aoc.Data):
 def part_2(data: aoc.Data):
     seen = []
     actions = data.split(',')
+    target = 1_000_000_000
     programs = deque(ascii_lowercase[:16])
-    while True:
+    for i in range(target):
         programs = dance(programs, actions)
         prog = ''.join(programs)
-        print(i, prog, seen.count(prog))
         if prog in seen:
-            return seen[(1_000_000_000 - 1) % i]
+            return seen[(target - 1) % i]
         seen.append(prog)
