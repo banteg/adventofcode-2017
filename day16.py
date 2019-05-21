@@ -4,11 +4,8 @@ from string import ascii_lowercase
 import aoc
 
 
-@aoc.test({'s1,x3/4,pe/b': 'baedc'})
-def part_1(data: aoc.Data):
-    size = 5 if data.is_example else 16
-    programs = deque(ascii_lowercase[:size])
-    for act in data.split(','):
+def dance(programs, actions):
+    for act in actions:
         action, args = act[0], act[1:].split('/')
         if action == 's':
             a = int(args[0])
@@ -20,4 +17,27 @@ def part_1(data: aoc.Data):
             a = programs.index(args[0])
             b = programs.index(args[1])
             programs[a], programs[b] = programs[b], programs[a]
+    return programs
+
+
+@aoc.test({'s1,x3/4,pe/b': 'baedc'})
+def part_1(data: aoc.Data):
+    size = 5 if data.is_example else 16
+    actions = data.split(',')
+    programs = deque(ascii_lowercase[:size])
+    programs = dance(programs, actions)
     return ''.join(programs)
+
+
+@aoc.test({})
+def part_2(data: aoc.Data):
+    seen = []
+    actions = data.split(',')
+    programs = deque(ascii_lowercase[:16])
+    while True:
+        programs = dance(programs, actions)
+        prog = ''.join(programs)
+        print(i, prog, seen.count(prog))
+        if prog in seen:
+            return seen[(1_000_000_000 - 1) % i]
+        seen.append(prog)
